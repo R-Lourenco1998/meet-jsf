@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui" lang="pt-BR">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
+	<title>Meetapp</title>
+
+	<f:metadata>
+		<f:viewAction action="#{eventoBean.getAllEventos}"></f:viewAction>
+	</f:metadata>
+</h:head>
+<h:body>
+	<div id="header" class="center">
+		<h:graphicImage id="logo" library="images" name="meetapp.png"></h:graphicImage>
+	</div>
+	<div class="formulario center">
+		<h:form id="form">
+			<h:panelGrid>
+				<p:outputLabel value="Nome do evento:" />
+				<p:inputText placeholder="Digite o nome do evento"
+					value="#{eventoBean.evento.nome}" />
+
+				<p:outputLabel value="Nome da organização:" />
+				<p:inputText placeholder="Digite o nome da organização"
+					value="#{eventoBean.evento.organizacao}" />
+
+				<p:outputLabel value="Local:" />
+				<p:inputText placeholder="Digite o local"
+					value="#{eventoBean.evento.local}" />
+
+				<p:outputLabel value="Data:" />
+				<p:calendar placeholder="Escolha a data" pattern="dd/MM/yyyy"
+					size="30" id="data" showTime="false"
+					value="#{eventoBean.evento.data}" />
+
+				<p:outputLabel value="Horário:" />
+				<p:datePicker placeholder="Escolha o horário" style="width: 100%"
+					id="horario" value="#{eventoBean.evento.horario}" timeOnly="true"
+					pattern="HH:mm" />
+
+				<h:panelGroup styleClass="center">
+					<p:commandButton id="btn-submit" value="Cadastrar"
+						action="#{eventoBean.adicionarEvento}" update="form table" />
+				</h:panelGroup>
+			</h:panelGrid>
+		</h:form>
+	</div>
+	<h:panelGroup styleClass="center">
+		<p:dataTable value="#{eventoBean.eventos}" id="table" paginator="true" rows="3"
+			paginatorPosition="bottom" var="e" border="1">
+			<p:column headerText="Nome">#{e.nome}</p:column>
+			<p:column headerText="Organização">#{e.organizacao}</p:column>
+			<p:column headerText="Local">#{e.local}</p:column>
+			<p:column headerText="Data">
+				<h:outputText value="#{e.data}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Horário">
+				<h:outputText value="#{e.horario}">
+					<f:convertDateTime pattern="HH:mm" timeZone="America/Sao_Paulo" />
+				</h:outputText>
+			</p:column>
+
+		</p:dataTable>
+	</h:panelGroup>
+</h:body>
+</html>
